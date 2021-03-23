@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr/src/pages/direcciones_page.dart';
 import 'package:qr/src/pages/mapas_page.dart';
-import 'package:qr/src/providers/db_provider.dart';
 import 'package:qr/src/providers/scan_list_provider.dart';
 import 'package:qr/src/providers/ui_provider.dart';
 import 'package:qr/src/widgets/custom_navigatorbar.dart';
@@ -16,7 +15,12 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         title: Text('Historial'),
         actions: [
-          IconButton(icon: Icon(Icons.delete_forever), onPressed: () {})
+          IconButton(
+              icon: Icon(Icons.delete_forever),
+              onPressed: () {
+                Provider.of<ScanListProvider>(context, listen: false)
+                    .borrarTodos();
+              })
         ],
       ),
       body: _HomePageBody(),
