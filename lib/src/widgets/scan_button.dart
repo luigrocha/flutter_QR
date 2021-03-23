@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:qr/src/providers/scan_list_provider.dart';
 
 class ScanButton extends StatelessWidget {
   @override
@@ -14,6 +16,11 @@ class ScanButton extends StatelessWidget {
         final barcodeScanRes = 'https://www.crsoft.org';
 
         print(barcodeScanRes);
+
+        final scanListProvider =
+            Provider.of<ScanListProvider>(context, listen: false);
+        scanListProvider.nuevoScan(barcodeScanRes);
+        scanListProvider.nuevoScan('geo:15.33,15.666');
       },
     );
   }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:qr/src/pages/direcciones_page.dart';
 import 'package:qr/src/pages/mapas_page.dart';
 import 'package:qr/src/providers/db_provider.dart';
+import 'package:qr/src/providers/scan_list_provider.dart';
 import 'package:qr/src/providers/ui_provider.dart';
 import 'package:qr/src/widgets/custom_navigatorbar.dart';
 import 'package:qr/src/widgets/scan_button.dart';
@@ -34,14 +35,23 @@ class _HomePageBody extends StatelessWidget {
     final uiProvider = Provider.of<UiProvider>(context);
     final currentIndex = uiProvider.selectedMenuOpt;
     // llamar a bd
-    final tempScan = new ScanModel(valor: 'http://www.crsoft.org');
+    //final tempScan = new ScanModel(valor: 'http://www.crsoft.org');
     //DBProvider.db.nuevoScan(tempScan);
     //DBProvider.db.getScandById(8).then((scan) => print(scan.valor));
-    DBProvider.db.getAllScand().then(print);
+    //DBProvider.db.getAllScand().then(print);
+    //DBProvider.db.deleteRawAllScan();
+
+    // usar el scan list provider
+
+    final scanListProvider =
+        Provider.of<ScanListProvider>(context, listen: false);
     switch (currentIndex) {
       case 0:
+        scanListProvider.cargarScansPorTipo('geo');
         return MapasPage();
       case 1:
+        scanListProvider.cargarScansPorTipo('http');
+
         return DireccionesPage();
       default:
         return MapasPage();
