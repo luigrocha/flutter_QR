@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr/src/pages/direcciones_page.dart';
 import 'package:qr/src/pages/mapas_page.dart';
+import 'package:qr/src/providers/db_provider.dart';
 import 'package:qr/src/providers/ui_provider.dart';
 import 'package:qr/src/widgets/custom_navigatorbar.dart';
 import 'package:qr/src/widgets/scan_button.dart';
@@ -32,7 +33,11 @@ class _HomePageBody extends StatelessWidget {
 
     final uiProvider = Provider.of<UiProvider>(context);
     final currentIndex = uiProvider.selectedMenuOpt;
-
+    // llamar a bd
+    final tempScan = new ScanModel(valor: 'http://www.crsoft.org');
+    //DBProvider.db.nuevoScan(tempScan);
+    //DBProvider.db.getScandById(8).then((scan) => print(scan.valor));
+    DBProvider.db.getAllScand().then(print);
     switch (currentIndex) {
       case 0:
         return MapasPage();
