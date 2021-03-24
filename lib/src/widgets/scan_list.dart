@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr/src/providers/scan_list_provider.dart';
+import 'package:qr/src/utils/utils.dart';
 
 class ScanList extends StatelessWidget {
   final String tipo;
@@ -33,7 +34,7 @@ class ScanList extends StatelessWidget {
                   Icons.keyboard_arrow_right,
                   color: Colors.green,
                 ),
-                onTap: () => {},
+                onTap: () => {launchURL(scans[i], context)},
               ),
             ));
   }
