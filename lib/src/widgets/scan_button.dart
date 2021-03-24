@@ -12,7 +12,7 @@ class ScanButton extends StatelessWidget {
       child: Icon(Icons.filter_center_focus),
       onPressed: () async {
         // final barcodeScanRes = 'https://www.google.com';
-        final barcodeScanRes = '-0.1390703, -78.4415041';
+        final barcodeScanRes = 'geo:-0.3211264,-78.4400384';
 
         if (barcodeScanRes == '-1') return;
         final scanListProvider =
