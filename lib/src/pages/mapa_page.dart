@@ -12,6 +12,8 @@ class MapaPage extends StatefulWidget {
 class _MapaPageState extends State<MapaPage> {
   Completer<GoogleMapController> _controller = Completer();
 
+  MapType mapType = MapType.normal;
+
   @override
   Widget build(BuildContext context) {
     final ScanModel scan = ModalRoute.of(context).settings.arguments;
@@ -27,18 +29,42 @@ class _MapaPageState extends State<MapaPage> {
         markerId: MarkerId('geo-location'), position: scan.getLatLng()));
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Mapa'),
-          actions: [],
-        ),
-        body: GoogleMap(
-          myLocationButtonEnabled: false,
-          mapType: MapType.normal,
-          markers: markers,
-          initialCameraPosition: puntoInicial,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ));
+      appBar: AppBar(
+        title: Text('Mapa'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.location_on),
+              onPressed: () async {
+                final GoogleMapController controller = await _controller.future;
+                controller.animateCamera(
+                    CameraUpdate.newCameraPosition(CameraPosition(
+                  target: scan.getLatLng(),
+                  zoom: 17,
+                  tilt: 50,
+                )));
+              })
+        ],
+      ),
+      body: GoogleMap(
+        myLocationButtonEnabled: false,
+        mapType: mapType,
+        markers: markers,
+        initialCameraPosition: puntoInicial,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.layers),
+        onPressed: () {
+          if (mapType == MapType.normal) {
+            mapType = MapType.satellite;
+          } else {
+            mapType = MapType.normal;
+          }
+          setState(() {});
+        },
+      ),
+    );
   }
 }
